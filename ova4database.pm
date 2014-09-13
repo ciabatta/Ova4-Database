@@ -20,6 +20,8 @@ sub new {
 		_deleteEntry => shift;
 		_editEntry => shift;
 		_search => shift;
+		_tableName => shift;
+		_deleteTable => shift;
 	};
 	bless $self, $class;
 	return $self;
@@ -28,6 +30,7 @@ sub new {
 sub create_table {
 	my ($self, %table) = @_;
 	$self->{_table} = $table if defined($table);
+	$self->{_tableName} = $_ if defined($_);
 	return $self->{_table};
 }
 sub generate_database_db {
@@ -52,7 +55,6 @@ sub generate_database_txt {
 	my ($self, $saveaddress) = @_;
 	$self->{_saveAddress} = $saveaddress if defined($saveaddress);
 	my $dir = dir($saveaddress[0]);
-	$dir . '\\';
 	my $file = $dir->file($saveaddress[1]);
 	my $file_handle = $file->openw();
 	my @list = $self->{_table};
@@ -96,6 +98,16 @@ sub delete_entry {
 	delete %table{$deleteentry};
 	$self->{_table} = %table;
 }	
+
+sub delete_table {
+	my ($self, $deletetable) = @_;
+	$self->{_deleteTable} = $deletetable if defined($deletetable);
+	%table = $self->{_table};
+	foreach my $keys = (keys(%table)){
+	delete $keys;
+	}
+	$self->{_table} = %table;
+}
 
 sub search {
 	my ($self, $searchname)= @_;
