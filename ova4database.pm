@@ -28,7 +28,7 @@ sub new {
 }
 
 sub create_table {
-	my ($self, %table) = @_;
+	my ($self, $table) = @_;
 	$self->{_table} = $table if defined($table);
 	$self->{_tableName} = $_ if defined($_);
 	return $self->{_table};
@@ -113,7 +113,7 @@ sub search {
 	my ($self, $searchname)= @_;
 	$self->{_search} = $searchname if defined($searchname);
 	my %table = $self->{_table};
-	if $searchname[1] = "All"; {
+	if ($searchname[1] = "All") {
 		foreach my $term (keys %table) {
 			print split(/:/, $term);
 			} 
